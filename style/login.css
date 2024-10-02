@@ -18,16 +18,13 @@ body, html {
     height: 100vh;
 }
 
-/* Linker sectie met de afbeelding */
 .left-section {
     flex: 1;
     background-image: url('../login/man.jpg');
     background-size: cover;
     background-position: center;
-    /* border-radius: 0% 10% 10% 0%; */
 }
 
-/* Rechter sectie met het login formulier */
 .right-section {
     flex: 1;
     display: flex;
@@ -74,7 +71,7 @@ body, html {
     border: 1px solid #ccc;
     outline: none;
 }
-/* R234 G99 B45 */
+
 .btn {
     height: 35px;
     background: rgb(234, 99, 45);
@@ -100,7 +97,6 @@ body, html {
     margin-bottom: 15px;
 }
 
-/* Error messages */
 .message {
     text-align: center;
     background: #f9eded;

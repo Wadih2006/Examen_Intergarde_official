@@ -12,8 +12,10 @@
 </head>
 <body>
     <div class="page-container">
-        <div class="left-section"></div> <!-- Achtergrondafbeelding aan de linkerkant -->
-        <div class="right-section"> <!-- Login formulier aan de rechterkant -->
+
+        <div class="left-section"></div>
+
+        <div class="right-section">
             <div class="container">
                 <div class="box form-box">
                     <?php 
@@ -37,7 +39,7 @@
                         }
 
                         if(isset($_SESSION['valid'])){
-                            header("Location: ../menu/menu.php");     // hier locatie naar menu
+                            header("Location: ../menu/menu.php");
                         }
                     }else{
                     ?>
