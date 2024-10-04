@@ -1,0 +1,87 @@
+@import url('https://fonts.googleapis.com/css2?family=Jockey+One&display=swap');
+
+* {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+    font-family: 'Jockey One', sans-serif;
+    color: whitesmoke;
+}
+
+.wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: calc(100vh - 100px);
+}
+
+.container-all {
+    width: 100%;
+    height: 70vh;
+    padding: 10px 20px 10px 0;
+    margin-right: 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: stretch;
+}
+
+.sidebar {
+    width: 15%;
+    height: 100%;
+    border-radius: 0 30px 30px 0;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    background-color: rgb(0, 35, 75);
+    box-shadow: 0px 3px 18px 2px rgba(0, 0, 0, 0.491);
+}
+
+.sidebar h1 {
+    margin-bottom: 15px;
+    color: whitesmoke;
+}
+
+.sidebar p {
+    margin: 10px 0;
+    color: whitesmoke;
+}
+
+.sidebar-btn {
+    padding: 10px 15px;
+    background-color: rgb(234, 99, 45);
+    color: whitesmoke;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-top: auto;
+    width: 100%;
+}
+
+.meldingen-box {
+    width: 80%;
+    display: flex;
+    align-items: stretch;
+    position: relative;
+    padding: 20px;
+    border-radius: 30px;
+    background-color: rgb(0, 35, 75);
+    box-shadow: 0px 3px 18px 2px rgba(0, 0, 0, 0.491);
+}
+
+.vertical-line {
+    width: 2px;
+    background-color: whitesmoke;
+    height: 100%;
+}
+
+.content-left, .content-right {
+    flex: 1;
+    padding: 20px;
+    text-align: left;
+}
+
+.content-left h2, .content-left p,
+.content-right h2, .content-right p {
+    color: whitesmoke; /* Zorgt ervoor dat de tekst in deze elementen wit is */
+}
