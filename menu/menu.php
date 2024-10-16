@@ -46,7 +46,7 @@
 <div class="regio-box">
     <div class="regio">
         <a href="#" id="noord-brabant" class="region-link">Noord-Brabant</a>
-        <a href="#" id="noord-limburg" class="region-link">Noord-Limburg</a>
+        <a href="../meldingen/noord-limburg.php" id="noord-limburg" class="region-link">Noord-Limburg</a>
         <a href="../meldingen/zuid-limburg.php" id="zuid-limburg" class="region-link">Zuid-Limburg</a>
     </div>
 </div>
