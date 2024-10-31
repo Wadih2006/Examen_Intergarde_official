@@ -13,7 +13,9 @@ body {
     background-size: cover;
     background-position: center;
 }
-
+.btn {
+    font-family: 'Jockey One', sans-serif;
+}
 .overlay {
     position: absolute;
     top: 0;

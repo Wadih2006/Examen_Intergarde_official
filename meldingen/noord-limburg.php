@@ -10,7 +10,7 @@
    $result = mysqli_query($con, "SELECT meldingen.*, adressen.straatnaam, adressen.huisnummer, adressen.postcode, adressen.plaats 
         FROM meldingen
         LEFT JOIN adressen ON meldingen.adressen_id = adressen.id
-        WHERE adressen.provincie_id = 3");
+        WHERE adressen.provincie_id = 2");
 
    if (!$result) {
        echo "Fout bij het ophalen van meldingen: " . mysqli_error($con);
@@ -36,7 +36,7 @@
         <img id="logo" src="../media/Intergarde-Logo.png" alt="Logo">
 
         <div class="regio-titel">
-            <h1>Zuid-Limburg</h1>
+            <h1>Noord-Limburg</h1>
         </div>
 
         <a href="../php/logout.php"> 

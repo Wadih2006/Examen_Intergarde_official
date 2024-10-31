@@ -2,9 +2,11 @@
    session_start();
 
    include("../php/config.php");
-   if(!isset($_SESSION['valid'])){
-    header("Location: ../login/index.php");
-    exit();
+
+   // Controleer of de gebruiker is ingelogd
+   if(!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] !== true){
+       header("Location: ../login/index.php");
+       exit();
    }
 ?>
 
@@ -31,7 +33,7 @@
         </div>
 
         <a href="../php/logout.php"> 
-            <button class="btn">Log Out</button> 
+            <button class="btn">Log Out</button>
         </a>
     </div>
 </header>
@@ -45,8 +47,8 @@
 
 <div class="regio-box">
     <div class="regio">
-        <a href="#" id="noord-brabant" class="region-link">Noord-Brabant</a>
-        <a href="#" id="noord-limburg" class="region-link">Noord-Limburg</a>
+        <a href="../meldingen/noord-brabant.php" id="noord-brabant" class="region-link">Noord-Brabant</a>
+        <a href="../meldingen/noord-limburg.php" id="noord-limburg" class="region-link">Noord-Limburg</a>
         <a href="../meldingen/zuid-limburg.php" id="zuid-limburg" class="region-link">Zuid-Limburg</a>
     </div>
 </div>
