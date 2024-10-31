@@ -12,6 +12,14 @@
         LEFT JOIN adressen ON meldingen.adressen_id = adressen.id
         WHERE adressen.provincie_id = 3");
 
+    $countResult = mysqli_query($con, "SELECT COUNT(*) as total FROM meldingen
+                                    LEFT JOIN adressen ON meldingen.adressen_id = adressen.id
+                                    WHERE adressen.provincie_id = 3");
+
+    $countRow = mysqli_fetch_assoc($countResult);
+    $totalMeldingen = $countRow['total'];
+
+
    if (!$result) {
        echo "Fout bij het ophalen van meldingen: " . mysqli_error($con);
        exit();
@@ -46,6 +54,11 @@
 </header>
 
     <div class="wrapper">
+
+        <div class="melding-count">
+            <p>Aantal meldingen: <strong><?php echo $totalMeldingen; ?></strong></p>
+        </div>
+        
         <div class="container-all">
 
             <div class="meldingen-box">
@@ -68,14 +81,14 @@
                         echo "</div>";
                     }
                 ?>
-</div>
+            </div>
                     <div class="vertical-line"></div>
 
-                <div class="content-right">
-                    <h2>Rechter Informatie</h2>
-                    <p>Informatie aan de rechterkant.</p>
-                    <p>Meer informatie aan de rechterkant.</p>
-                </div>
+            <div class="content-right">
+                <h2>Rechter Informatie</h2>
+                <p>Informatie aan de rechterkant.</p>
+                <p>Meer informatie aan de rechterkant.</p>
+            </div>
                 
             </div>
 

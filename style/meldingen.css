@@ -10,10 +10,12 @@
 
 .wrapper {
     display: flex;
-    justify-content: center;
+    flex-direction: column; /* Zorgt dat .melding-count boven .container-all komt */
     align-items: center;
     height: calc(100vh - 100px);
+    padding-top: 20px; /* Optioneel, voegt ruimte bovenaan toe */
 }
+
 .regio-titel {
     text-align: center;
     position: absolute;
@@ -21,17 +23,18 @@
     transform: translateX(-50%);
     padding: 10px;
 }
+
 h1 {
     color: rgb(0, 35, 75);
 }
+
 .container-all {
-    width: 100%;
+    width: 90%; /* Zelfde breedte als melding-count */
     height: 70vh;
     display: flex;
     justify-content: space-between;
     align-items: stretch;
 }
-
 
 .sidebar-btn {
     padding: 10px 15px;
@@ -40,26 +43,21 @@ h1 {
     border: none;
     border-radius: 5px;
     cursor: pointer;
-    
     width: 10%;
-    position: absolute; /* Plaats de knop relatief aan de sidebar */
-    bottom: 20px; /* Zorg dat de knop 20px van de onderkant af staat */
-    left: 20px; /* Zorg dat de knop 20px van de linkerkant af staat */
+    position: absolute;
+    bottom: 20px;
+    left: 20px;
     z-index: 999;
 }
 
 .meldingen-box {
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    width: 90%;
+    width: 100%;
     display: flex;
     align-items: stretch;
-    position: relative;
     padding: 20px;
-    border-radius: 30px;
+    border-radius: 0px 30px 30px 30px;
     background-color: rgb(0, 35, 75);
-    box-shadow: 0px 3px 18px 2px rgba(0, 0, 0, 0.491);
+    box-shadow: 0px 10px 18px rgba(0, 0, 0, 0.3);
 }
 
 .vertical-line {
@@ -79,6 +77,21 @@ h1 {
 .content-right h2, .content-right p {
     color: whitesmoke;
 }
+
 .content-left p, .content-right p {
-    color: rgba(255, 255, 255, 0.626); /* Maak wit iets doorzichtig */
+    color: rgba(255, 255, 255, 0.626);
+}
+
+.melding-count {
+    width: 15%; /* Maak de breedte gelijk aan de meldingen-box */
+    margin-right: 75%;
+    background-color: rgb(0, 35, 75);
+    padding: 10px 20px;
+    border-radius: 30px 30px 0px 0px;
+    text-align: center;
+    font-size: 1.2em;
+}
+
+.melding-count p {
+    color: whitesmoke;
 }
