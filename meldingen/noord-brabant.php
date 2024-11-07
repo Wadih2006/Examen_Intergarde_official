@@ -62,23 +62,30 @@
         <div class="meldingen-box">
  
             <div class="content-left">
-                <?php
-                    while($row = mysqli_fetch_assoc($result)) {
-                        echo "<div class='melding'>";
-                            echo "<p><strong>Onderwerp:</strong></p>";
-                            echo "<p>" . $row['onderwerp'] . "</p>";
-                            echo "<p><strong>Beschrijving:</strong></p>";
-                            echo "<p>" . $row['beschrijving'] . "</p>";
-                            echo "<p><strong>Datum:</strong></p>";
-                            echo "<p>" . $row['datum'] . "</p>";
-                            echo "<p><strong>Status:</strong></p>";
-                            echo "<p>" . $row['status'] . "</p>";
-                            echo "<p><strong>Adres:</strong></p>";
-                            echo "<p>" . $row['straatnaam'] . " " . $row['huisnummer'] . ", " . $row['postcode'] . " " . $row['plaats'] . "</p>";
-                            echo "<hr>";
-                        echo "</div>";
-                    }
-                ?>
+            <?php
+while ($row = mysqli_fetch_assoc($result)) {
+    echo "<div class='melding'>";
+    echo "<p><strong>Onderwerp:</strong></p>";
+    echo "<p>" . $row['onderwerp'] . "</p>";
+    echo "<p><strong>Beschrijving:</strong></p>";
+    echo "<p>" . $row['beschrijving'] . "</p>";
+    echo "<p><strong>Datum:</strong></p>";
+    echo "<p>" . $row['datum'] . "</p>";
+    echo "<p><strong>Status:</strong></p>";
+    echo "<p>" . $row['status'] . "</p>";
+    echo "<p><strong>Adres:</strong></p>";
+    echo "<p>" . $row['straatnaam'] . " " . $row['huisnummer'] . ", " . $row['postcode'] . " " . $row['plaats'] . "</p>";
+    
+    // Verwijderknop
+    echo "<a href='delete_melding.php?melding_id=" . $row['id'] . "' onclick=\"return confirm('Weet u zeker dat u deze melding wilt verwijderen?');\">";
+    echo "<button class='btn-delete'>Verwijderen</button>";
+    echo "</a>";
+    
+    echo "<hr>";
+    echo "</div>";
+}
+?>
+
                 
                 <!-- Vaste knop rechtsonder in content-left -->
                 <div class="fixed-btn-container">
