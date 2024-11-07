@@ -150,6 +150,15 @@ h1 {
     border: none;
     border-radius: 5px;
 }
+.melding {
+    position: relative;
+    padding-bottom: 10px;
+}
+ 
+.btn-delete-container {
+    text-align: right; /* Zet de container en inhoud (de knop) rechts uitgelijnd */
+    margin: 10px; /* Optioneel: voegt wat ruimte boven de knop toe */
+}
 
 .btn-delete {
     background-color: #e74c3c;

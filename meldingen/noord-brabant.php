@@ -63,30 +63,31 @@
  
             <div class="content-left">
             <?php
-while ($row = mysqli_fetch_assoc($result)) {
-    echo "<div class='melding'>";
-    echo "<p><strong>Onderwerp:</strong></p>";
-    echo "<p>" . $row['onderwerp'] . "</p>";
-    echo "<p><strong>Beschrijving:</strong></p>";
-    echo "<p>" . $row['beschrijving'] . "</p>";
-    echo "<p><strong>Datum:</strong></p>";
-    echo "<p>" . $row['datum'] . "</p>";
-    echo "<p><strong>Status:</strong></p>";
-    echo "<p>" . $row['status'] . "</p>";
-    echo "<p><strong>Adres:</strong></p>";
-    echo "<p>" . $row['straatnaam'] . " " . $row['huisnummer'] . ", " . $row['postcode'] . " " . $row['plaats'] . "</p>";
-    
-    // Verwijderknop
-    echo "<a href='delete_melding.php?melding_id=" . $row['id'] . "' onclick=\"return confirm('Weet u zeker dat u deze melding wilt verwijderen?');\">";
-    echo "<button class='btn-delete'>Verwijderen</button>";
-    echo "</a>";
-    
-    echo "<hr>";
-    echo "</div>";
-}
-?>
-
-                
+                while ($row = mysqli_fetch_assoc($result)) {
+                    echo "<div class='melding'>";
+                    echo "<p><strong>Onderwerp:</strong></p>";
+                    echo "<p>" . $row['onderwerp'] . "</p>";
+                    echo "<p><strong>Beschrijving:</strong></p>";
+                    echo "<p>" . $row['beschrijving'] . "</p>";
+                    echo "<p><strong>Datum:</strong></p>";
+                    echo "<p>" . $row['datum'] . "</p>";
+                    echo "<p><strong>Status:</strong></p>";
+                    echo "<p>" . $row['status'] . "</p>";
+                    echo "<p><strong>Adres:</strong></p>";
+                    echo "<p>" . $row['straatnaam'] . " " . $row['huisnummer'] . ", " . $row['postcode'] . " " . $row['plaats'] . "</p>";
+                    
+                    // Nieuwe div voor de verwijderknop om uitlijning mogelijk te maken
+                    echo "<div class='btn-delete-container'>";
+                    echo "<a href='delete_melding.php?melding_id=" . $row['id'] . "' onclick=\"return confirm('Weet u zeker dat u deze melding wilt verwijderen?');\">";
+                    echo "<button class='btn-delete'>Verwijderen</button>";
+                    echo "</a>";
+                    echo "</div>";
+                    
+                    echo "<hr>";
+                    echo "</div>";
+                }
+                ?>
+ 
                 <!-- Vaste knop rechtsonder in content-left -->
                 <div class="fixed-btn-container">
                     <button class="popup-btn" onclick="openPopup()">Meer info</button>
@@ -137,4 +138,8 @@ while ($row = mysqli_fetch_assoc($result)) {
  
 </body>
 </html>
+ 
+ 
+
+ 
  
