@@ -22,3 +22,5 @@ if (isset($_GET['melding_id'])) {
     echo "Geen melding geselecteerd om te verwijderen.";
 }
 ?>
+
+

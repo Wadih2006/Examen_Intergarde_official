@@ -150,3 +150,16 @@ h1 {
     border: none;
     border-radius: 5px;
 }
+
+.btn-delete {
+    background-color: #e74c3c;
+    color: white;
+    border: none;
+    padding: 10px 15px;
+    cursor: pointer;
+    border-radius: 5px;
+}
+
+.btn-delete:hover {
+    background-color: #c0392b;
+}
