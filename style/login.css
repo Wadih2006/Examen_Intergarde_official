@@ -20,7 +20,7 @@ body, html {
 
 .left-section {
     flex: 1;
-    background-image: url('../login/man.jpg');
+    background-image: url('../media/man.jpg');
     background-size: cover;
     background-position: center;
 }
