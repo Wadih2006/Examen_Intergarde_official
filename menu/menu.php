@@ -5,7 +5,7 @@
 
    // Controleer of de gebruiker is ingelogd
    if(!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] !== true){
-       header("Location: ../login/index.php");
+       header("Location: ../login/login.php");
        exit();
    }
 ?>
@@ -32,7 +32,7 @@
             <p>Uw Email is <b><?php echo $_SESSION['valid']; ?></b>.</p>
         </div>
 
-        <a href="../php/logout.php"> 
+        <a href="../login/logout.php"> 
             <button class="btn">Log Out</button>
         </a>
     </div>
