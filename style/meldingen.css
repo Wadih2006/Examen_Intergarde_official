@@ -161,8 +161,8 @@ h1 {
 }
 
 .btn-delete {
-    background-color: #e74c3c;
-    color: white;
+    background-color: #e7673c;
+    color: rgb(240, 234, 234);
     border: none;
     padding: 10px 15px;
     cursor: pointer;
@@ -170,5 +170,5 @@ h1 {
 }
 
 .btn-delete:hover {
-    background-color: #c0392b;
+    background-color: #c02b35;
 }
