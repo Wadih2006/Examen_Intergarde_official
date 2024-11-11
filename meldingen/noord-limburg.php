@@ -19,6 +19,11 @@
     $countRow = mysqli_fetch_assoc($countResult);
     $totalMeldingen = $countRow['total'];
 
+    $personeelResult = mysqli_query($con, "SELECT * FROM personeel");
+   if (!$personeelResult) {
+       echo "Fout bij het ophalen van personeel: " . mysqli_error($con);
+       exit();
+   }
 
    if (!$result) {
        echo "Fout bij het ophalen van meldingen: " . mysqli_error($con);
@@ -47,7 +52,7 @@
             <h1>Noord-Limburg</h1>
         </div>
 
-        <a href="../php/logout.php"> 
+        <a href="../login/logout.php"> 
             <button class="btn">Log Out</button> 
         </a>
     </div>
@@ -92,13 +97,22 @@
 </div>
                     <div class="vertical-line"></div>
 
-                <div class="content-right">
-                    <h2>Rechter Informatie</h2>
-                    <p>Informatie aan de rechterkant.</p>
-                    <p>Meer informatie aan de rechterkant.</p>
-                </div>
-                
-            </div>
+                <!-- Rechter sectie -->
+        <div class="right-section">
+            <!-- Personeelsinformatie hier weergeven -->
+            <h2>Personeels Overzicht</h2><br>
+            <?php
+            // Personeel informatie tonen als een lijst onder de "Rechter Informatie"
+            while ($row = mysqli_fetch_assoc($personeelResult)) {
+                echo "<div class='personeel-item'>
+                        <strong>Naam:</strong> <p> {$row['naam']}<br>
+                        <strong>Personeelsnummer:</strong> <p> {$row['personeelsnummer']}<br>
+                        <strong>Status:</strong> <p> {$row['status']}
+                      </div>";
+            }
+            ?>
+        </div>
+    </div>
 
         </div>
         
