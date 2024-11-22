@@ -40,6 +40,13 @@ $countResult = mysqli_query($con, "SELECT COUNT(*) as total FROM meldingen
 $countRow = mysqli_fetch_assoc($countResult);
 $totalMeldingen = $countRow['total'];
 
+$personeelResult = mysqli_query($con, "SELECT * FROM personeel");
+if (!$personeelResult) {
+    echo "Fout bij het ophalen van personeel: " . mysqli_error($con);
+    exit();
+}
+
+
 if (!$result) {
     echo "Fout bij het ophalen van meldingen: " . mysqli_error($con);
     exit();
@@ -92,13 +99,21 @@ if (!$result) {
                             echo "<p>" . $row['status'] . "</p>";
                             echo "<p><strong>Adres:</strong></p>";
                             echo "<p>" . $row['straatnaam'] . " " . $row['huisnummer'] . ", " . $row['postcode'] . " " . $row['plaats'] . "</p>";
+
+                            // Nieuwe div voor de verwijderknop om uitlijning mogelijk te maken
+                            echo "<div class='btn-delete-container'>";
+                            echo "<a href='delete_melding.php?melding_id=" . $row['id'] . "' onclick=\"return confirm('Weet u zeker dat u deze melding wilt verwijderen?');\">";
+                            echo "<button class='btn-delete'>Verwijderen</button>";
+                            echo "</a>";
+                            echo "</div>";
+                            
                             echo "<hr>";
-                        echo "</div>";
-                    }
+                            echo "</div>";
+                }
                 ?>
                 
                 <div class="fixed-btn-container">
-                    <button class="popup-btn" onclick="openPopup()">Meer info</button>
+                    <button class="popup-btn" onclick="openPopup()">Voeg melding toe</button>
                 </div>
             </div>
 
@@ -129,10 +144,19 @@ if (!$result) {
 
             <div class="vertical-line"></div>
 
-            <div class="content-right">
-                <h2>Rechter Informatie</h2>
-                <p>Informatie aan de rechterkant.</p>
-                <p>Meer informatie aan de rechterkant.</p>
+            <div class="right-section">
+                <!-- Personeelsinformatie hier weergeven -->
+                <h2>Personeels Overzicht</h2><br>
+                <?php
+                // Personeel informatie tonen als een lijst onder de "Rechter Informatie"
+                while ($row = mysqli_fetch_assoc($personeelResult)) {
+                    echo "<div class='personeel-item'>
+                            <strong>Naam:</strong> <p> {$row['naam']}<br>
+                            <strong>Personeelsnummer:</strong> <p> {$row['personeelsnummer']}<br>
+                            <strong>Status:</strong> <p> {$row['status']}
+                        </div>";
+                }
+                ?>
             </div>
         </div>
     </div>
