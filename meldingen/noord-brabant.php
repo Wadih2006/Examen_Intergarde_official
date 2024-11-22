@@ -92,8 +92,15 @@ if (!$result) {
                             echo "<p>" . $row['status'] . "</p>";
                             echo "<p><strong>Adres:</strong></p>";
                             echo "<p>" . $row['straatnaam'] . " " . $row['huisnummer'] . ", " . $row['postcode'] . " " . $row['plaats'] . "</p>";
-                            echo "<hr>";
-                        echo "</div>";
+                            // Nieuwe div voor de verwijderknop om uitlijning mogelijk te maken
+                    echo "<div class='btn-delete-container'>";
+                    echo "<a href='delete_melding.php?melding_id=" . $row['id'] . "' onclick=\"return confirm('Weet u zeker dat u deze melding wilt verwijderen?');\">";
+                    echo "<button class='btn-delete'>Verwijderen</button>";
+                    echo "</a>";
+                    echo "</div>";
+                    
+                    echo "<hr>";
+                    echo "</div>";
                     }
                 ?>
                 
