@@ -11,29 +11,40 @@
     <title>Login</title>
 </head>
 <body>
+
+<!-- CSS classes -->
     <div class="page-container">
-
         <div class="left-section"></div>
-
         <div class="right-section">
             <div class="container">
                 <div class="box form-box">
                     <?php 
+
+                    //importeert config.php in deze code
                     include("../php/config.php");
                     if(isset($_POST['submit'])){
+
+                        //gegevens worden opgehaald als je op submit knop klikt
                         $email = mysqli_real_escape_string($con, $_POST['email']);
                         $password = mysqli_real_escape_string($con, $_POST['password']);
-
-                        $result = mysqli_query($con, "SELECT * FROM users WHERE Email='$email' AND Password='$password' ") or die("Select Error");
+                        
+                        //gegevens worden gecontroleerd als ze overeen komen in database
+                        $result = mysqli_query($con, "SELECT * FROM users WHERE Email='$email' AND Password='$password' ") or die("Wrong Username or Password");
+                        
+                        //gegevens worden opgeslagen in een row
                         $row = mysqli_fetch_assoc($result);
 
+                        //als alles gecontroleerd is krijgt alles een sessie en word je door verwezen naar menu.php
                         if(is_array($row) && !empty($row)){
                             $_SESSION['valid'] = $row['Email'];
                             $_SESSION['username'] = $row['Username'];
                             $_SESSION['id'] = $row['Id'];
-                            $_SESSION['loggedin'] = true;  // Voeg sessievariable toe om inlogstatus aan te geven
+                            $_SESSION['loggedin'] = true;
                             header("Location: ../menu/menu.php");
-                            exit();  // Vergeet niet de exit om header redirect af te ronden
+                            exit();
+
+                            //als geen account in de database overeen komt komt er een melding
+                            //"Wrong Username or Password"
                         }else{
                             echo "<div class='message'>
                             <p>Wrong Username or Password</p>
@@ -42,6 +53,8 @@
                         }
                     } else {
                     ?>
+
+                    <!-- dit is de login form -->
                     <header>Login</header>
                     <form action="" method="post">
                         <div class="field input">
