@@ -13,6 +13,7 @@ if (isset($_GET['melding_id'])) {
     // Verwijder de melding uit de database
     $deleteResult = mysqli_query($con, "DELETE FROM meldingen WHERE id = $melding_id");
 
+    // Wanneer verwijderd word je doorgestuurd naar het menu
     if ($deleteResult) {
         header("Location: ../menu/menu.php");
     } else {

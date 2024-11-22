@@ -2,51 +2,58 @@
 session_start();
 include("../php/config.php");
 
+// Controleer of de gebruiker is ingelogd; anders omleiden naar de login-pagina
 if (!isset($_SESSION['valid'])) {
     header("Location: ../login/index.php");
     exit();
 }
 
-// Verwerk AJAX-aanvraag om nieuwe melding toe te voegen
+// Verwerk een AJAX-aanvraag om een nieuwe melding toe te voegen
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['action'] === 'add_melding') {
+    // Valideer en ontsnap de ingevoerde gegevens om SQL-injecties te voorkomen
     $onderwerp = mysqli_real_escape_string($con, $_POST['onderwerp']);
     $beschrijving = mysqli_real_escape_string($con, $_POST['beschrijving']);
     $datum = mysqli_real_escape_string($con, $_POST['datum']);
     $status = mysqli_real_escape_string($con, $_POST['status']);
-    $adressen_id = mysqli_real_escape_string($con, $_POST['adressen_id']); // verwacht een integer ID van het adres
+    $adressen_id = mysqli_real_escape_string($con, $_POST['adressen_id']); // Verwacht een numeriek adres-ID
 
     // Voeg de nieuwe melding toe aan de database
     $query = "INSERT INTO meldingen (onderwerp, beschrijving, datum, status, adressen_id) 
               VALUES ('$onderwerp', '$beschrijving', '$datum', '$status', '$adressen_id')";
 
     if (mysqli_query($con, $query)) {
+        // Stuur een JSON-respons terug als de operatie succesvol was
         echo json_encode(["success" => true, "message" => "Melding succesvol toegevoegd!"]);
     } else {
+        // Stuur een foutbericht als de query faalt
         echo json_encode(["success" => false, "message" => "Fout bij het toevoegen van melding: " . mysqli_error($con)]);
     }
     exit();
 }
 
-// Haal bestaande meldingen op uit de database
+// Haal meldingen op die gekoppeld zijn aan adressen binnen provincie_id = 3
 $result = mysqli_query($con, "SELECT meldingen.*, adressen.straatnaam, adressen.huisnummer, adressen.postcode, adressen.plaats
     FROM meldingen
     LEFT JOIN adressen ON meldingen.adressen_id = adressen.id
     WHERE adressen.provincie_id = 3");
 
+// Haal het totaal aantal meldingen op
 $countResult = mysqli_query($con, "SELECT COUNT(*) as total FROM meldingen
     LEFT JOIN adressen ON meldingen.adressen_id = adressen.id
     WHERE adressen.provincie_id = 3");
 
+// Sla het totaal aantal meldingen op in een variabele
 $countRow = mysqli_fetch_assoc($countResult);
 $totalMeldingen = $countRow['total'];
 
+// Haal personeelsinformatie op
 $personeelResult = mysqli_query($con, "SELECT * FROM personeel");
 if (!$personeelResult) {
     echo "Fout bij het ophalen van personeel: " . mysqli_error($con);
     exit();
 }
 
-
+// Controleer of het ophalen van meldingen succesvol was
 if (!$result) {
     echo "Fout bij het ophalen van meldingen: " . mysqli_error($con);
     exit();
@@ -60,6 +67,7 @@ if (!$result) {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Zuid-Limburg</title>
 
+    <!-- Stijlen voor de meldingenpagina -->
     <link rel="stylesheet" href="../style/meldingen.css">
     <link rel="stylesheet" href="../style/header.css">
 </head>
@@ -71,6 +79,7 @@ if (!$result) {
         <div class="regio-titel">
             <h1>Zuid-Limburg</h1>
         </div>
+        <!-- Log-out knop -->
         <a href="../php/logout.php">
             <button class="btn">Log Out</button>
         </a>
@@ -78,8 +87,8 @@ if (!$result) {
 </header>
 
 <div class="wrapper">
-
     <div class="melding-count">
+        <!-- Toon het totale aantal meldingen -->
         <p>Aantal meldingen: <strong><?php echo $totalMeldingen; ?></strong></p>
     </div>
 
@@ -87,37 +96,38 @@ if (!$result) {
         <div class="meldingen-box">
             <div class="content-left">
                 <?php
-                    while ($row = mysqli_fetch_assoc($result)) {
-                        echo "<div class='melding'>";
-                            echo "<p><strong>Onderwerp:</strong></p>";
-                            echo "<p>" . $row['onderwerp'] . "</p>";
-                            echo "<p><strong>Beschrijving:</strong></p>";
-                            echo "<p>" . $row['beschrijving'] . "</p>";
-                            echo "<p><strong>Datum:</strong></p>";
-                            echo "<p>" . $row['datum'] . "</p>";
-                            echo "<p><strong>Status:</strong></p>";
-                            echo "<p>" . $row['status'] . "</p>";
-                            echo "<p><strong>Adres:</strong></p>";
-                            echo "<p>" . $row['straatnaam'] . " " . $row['huisnummer'] . ", " . $row['postcode'] . " " . $row['plaats'] . "</p>";
+                // Loop door alle opgehaalde meldingen en toon ze
+                while ($row = mysqli_fetch_assoc($result)) {
+                    echo "<div class='melding'>";
+                        echo "<p><strong>Onderwerp:</strong></p>";
+                        echo "<p>" . $row['onderwerp'] . "</p>";
+                        echo "<p><strong>Beschrijving:</strong></p>";
+                        echo "<p>" . $row['beschrijving'] . "</p>";
+                        echo "<p><strong>Datum:</strong></p>";
+                        echo "<p>" . $row['datum'] . "</p>";
+                        echo "<p><strong>Status:</strong></p>";
+                        echo "<p>" . $row['status'] . "</p>";
+                        echo "<p><strong>Adres:</strong></p>";
+                        echo "<p>" . $row['straatnaam'] . " " . $row['huisnummer'] . ", " . $row['postcode'] . " " . $row['plaats'] . "</p>";
 
-                            // Nieuwe div voor de verwijderknop om uitlijning mogelijk te maken
-                            echo "<div class='btn-delete-container'>";
-                            echo "<a href='delete_melding.php?melding_id=" . $row['id'] . "' onclick=\"return confirm('Weet u zeker dat u deze melding wilt verwijderen?');\">";
-                            echo "<button class='btn-delete'>Verwijderen</button>";
-                            echo "</a>";
-                            echo "</div>";
-                            
-                            echo "<hr>";
-                            echo "</div>";
-                    }
+                        // Knop voor verwijderen van melding
+                        echo "<div class='btn-delete-container'>";
+                        echo "<a href='delete_melding.php?melding_id=" . $row['id'] . "' onclick=\"return confirm('Weet u zeker dat u deze melding wilt verwijderen?');\">";
+                        echo "<button class='btn-delete'>Verwijderen</button>";
+                        echo "</a>";
+                        echo "</div>";
+                        
+                        echo "<hr>";
+                        echo "</div>";
+                }
                 ?>
-                
                 <div class="fixed-btn-container">
+                    <!-- Knop om het formulier voor een nieuwe melding te openen -->
                     <button class="popup-btn" onclick="openPopup()">Voeg melding toe</button>
                 </div>
             </div>
 
-            <!-- Popup HTML -->
+            <!-- Pop-up formulier voor nieuwe meldingen -->
             <div id="popup" class="popup" style="display: none;">
                 <div class="popup-content">
                     <span class="close-btn" onclick="closePopup()">&times;</span>
@@ -145,10 +155,9 @@ if (!$result) {
             <div class="vertical-line"></div>
 
             <div class="right-section">
-                <!-- Personeelsinformatie hier weergeven -->
+                <!-- Toon personeelsinformatie -->
                 <h2>Personeels Overzicht</h2><br>
                 <?php
-                // Personeel informatie tonen als een lijst onder de "Rechter Informatie"
                 while ($row = mysqli_fetch_assoc($personeelResult)) {
                     echo "<div class='personeel-item'>
                             <strong>Naam:</strong> <p> {$row['naam']}<br>
@@ -162,23 +171,28 @@ if (!$result) {
     </div>
 </div>
 
+<!-- Knop om terug te gaan naar het menu -->
 <button class="sidebar-btn" onclick="window.location.href='../menu/menu.php';">Terug</button>
 
 <script>
+    // Functie om het pop-upvenster te openen
     function openPopup() {
         document.getElementById("popup").style.display = "flex";
     }
 
+    // Functie om het pop-upvenster te sluiten
     function closePopup() {
         document.getElementById("popup").style.display = "none";
     }
 
+    // Functie om een nieuwe melding toe te voegen via AJAX
     function addMelding(event) {
-        event.preventDefault();
+        event.preventDefault(); // Voorkom herladen van de pagina
 
         const formData = new FormData(document.getElementById("add-melding-form"));
-        formData.append('action', 'add_melding');
+        formData.append('action', 'add_melding'); // Voeg een actieparameter toe
 
+        // Verstuur de gegevens naar de server
         fetch("", {
             method: "POST",
             body: formData
@@ -188,6 +202,7 @@ if (!$result) {
             if (data.success) {
                 alert(data.message);
 
+                // Dynamisch de nieuwe melding toevoegen aan de lijst
                 const meldingDiv = document.createElement("div");
                 meldingDiv.classList.add("melding");
                 meldingDiv.innerHTML = `
@@ -205,8 +220,8 @@ if (!$result) {
                 `;
                 document.querySelector(".content-left").appendChild(meldingDiv);
 
-                closePopup();
-                document.getElementById("add-melding-form").reset();
+                closePopup(); // Sluit het pop-upvenster
+                document.getElementById("add-melding-form").reset(); // Reset het formulier
             } else {
                 alert("Fout bij het toevoegen van melding: " + data.message);
             }
